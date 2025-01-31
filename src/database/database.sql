@@ -1,7 +1,9 @@
+DROP DATABASE IF EXISTS avion;
 CREATE DATABASE avion;
+
 USE avion;
 
-CREATE TABLE `Produits` (
+CREATE TABLE IF NOT EXISTS `Produits` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NOT NULL,
   `prix_unitaire` FLOAT NOT NULL,
@@ -10,12 +12,12 @@ CREATE TABLE `Produits` (
   `id_fournisseurs` INT NOT NULL
 );
 
-CREATE TABLE `Catégories` (
+CREATE TABLE IF NOT EXISTS `Categories` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nom_categorie` VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE `Fournisseurs` (
+CREATE TABLE IF NOT EXISTS `Fournisseurs` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NOT NULL,
   `prenom` VARCHAR(45) NOT NULL,
@@ -23,7 +25,7 @@ CREATE TABLE `Fournisseurs` (
   `téléphone` INT NOT NULL
 );
 
-CREATE TABLE `Clients` (
+CREATE TABLE IF NOT EXISTS `Clients` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NOT NULL,
   `prenom` VARCHAR(45) NOT NULL,
@@ -31,13 +33,13 @@ CREATE TABLE `Clients` (
   `téléphone` INT NOT NULL
 );
 
-CREATE TABLE `Commandes` (
+CREATE TABLE IF NOT EXISTS `Commandes` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `date_commande` DATETIME NOT NULL,
   `id_client` INT NOT NULL
 );
 
-CREATE TABLE `Lignes_Commande` (
+CREATE TABLE IF NOT EXISTS `Lignes_Commande` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `id_commande` INT NOT NULL,
   `id_produit` INT NOT NULL,
@@ -45,7 +47,7 @@ CREATE TABLE `Lignes_Commande` (
   `prix_unitaire` FLOAT NOT NULL
 );
 
-ALTER TABLE `Produits` ADD FOREIGN KEY (`id_categorie`) REFERENCES `Catégories` (`id`);
+ALTER TABLE `Produits` ADD FOREIGN KEY (`id_categorie`) REFERENCES `Categories` (`id`);
 
 ALTER TABLE `Produits` ADD FOREIGN KEY (`id_fournisseurs`) REFERENCES `Fournisseurs` (`id`);
 
