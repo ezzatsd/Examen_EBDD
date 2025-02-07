@@ -76,14 +76,14 @@ initDB().then(connection => {
     });
 
     app.get('/categories', async (req, res) => {
-        const { nom } = req.query;
-        const [result] = await connection.query(`SELECT * FROM Categories WHERE nom = '${nom}'`);
+        const { nom_categorie } = req.query;
+        const [result] = await connection.query(`SELECT * FROM Categories WHERE nom_categorie = '${nom_categorie}'`);
         res.json(result);
     });
 
-    app.post('categories', async (req, res) => {
+    app.post('/categories', async (req, res) => {
         const {nom_categorie } = req.body;
-        const sql = `INSERT INTO Produits (nom_categories) VALUES ('${nom_categorie}')`;
+        const sql = `INSERT INTO Categories (nom_categorie) VALUES ('${nom_categorie}')`;
         await connection.query(sql, [ nom_categorie]);
         res.status(201).json({ message: 'Catégories ajouté avec succès' });
     });
