@@ -82,3 +82,27 @@ User : Les utilisateurs classiques peuvent effectuer des opérations de lecture 
 Implémentation possible :
 Mise en place d’un mécanisme d’authentification (via sessions) qui permet d’identifier l’utilisateur et de connaître son rôle.
 Vérification dans les endpoints sensibles afin de n’autoriser l’opération que si l’utilisateur est identifié comme admin.
+
+
+1. Lister les commandes par année :
+Créatino d'une API qui permet de filtrer les commandes en fonction de l'année. Par exemple, avec un GET /commandes?start=2023-01-01&end=2023-12-31. On récupère toutes les commandes passées entre deux dates. Cela permet de suivre les commandes sur une période donnée.
+
+2. Rechercher les commandes d'un client :
+Pour retrouver les commandes d'un client spécifique, on peut utiliser une route comme GET /clients/:id/commandes. Cette route permettra de lister toutes les commandes associées à un client, en utilisant son identifiant (:id).
+
+3. Lister les commandes contenant un article précis :
+En mettant une route comme GET /produits/:id/commandes, on peut retrouver toutes les commandes qui contiennent un produit précis en utilisant l'identifiant du produit. Cela permettra de savoir dans quelles commandes un produit spécifique a été vendu.
+
+4. Recherche multi-critères :
+Pour effectuer une recherche plus détaillée avec plusieurs critères, comme le client, la date, le statut ou le produit, on peut ajouter des paramètres à la route, par exemple GET /commandes?client_id=1&date_debut=2023-01-01&date_fin=2023-12-31&produit_id=2. Cela permettra de filtrer les commandes en fonction de plusieurs critères à la fois.
+
+5. Statistiques simples :
+Calculer des statistiques simples, comme les produits les plus vendus ou le total des ventes pendant une période spécifique. Par exemple, GET /commandes/statistiques?start=2023-01-01&end=2023-12-31 pourrait retourner des informations sur le nombre de ventes par produit ou le chiffre d'affaires total pour l'année.
+
+6. Gestion fine du stock :
+Pour gérer le stock de manière plus précise, on met en place un système qui décrémente automatiquement le stock après chaque commande. Si le stock est insuffisant pour une commande, on pourra bloquer la commande et afficher un message d’erreur. Par exemple, une route comme POST /commandes/:id/validation pourrait inclure une vérification du stock avant de valider la commande.
+
+7. Notifications de stock faible :
+Pour notifier les responsables lorsque le stock d'un produit est faible, on créer une route comme GET /produits/stock-faible?seuil=10. Cela permettra de récupérer tous les produits dont la quantité en stock est inférieure au seuil spécifié, afin que des actions puissent être prises pour réapprovisionner ces produits.
+
+
