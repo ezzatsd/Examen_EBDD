@@ -1,0 +1,84 @@
+V1 :
+
+1. Création de la base de données
+
+Conception de la base de données pour gérer le stock et les commandes d'un petit commerce de maquettes d’avion en papier. Le schéma comporte les tables suivantes :
+
+Produits
+id (clé primaire, auto-incrémentée)
+nom
+prix_unitaire
+quantité_stock
+Catégories
+id (clé primaire, auto-incrémentée)
+nom_categorie
+
+Fournisseurs
+id (clé primaire, auto-incrémentée)
+nom
+prenom
+adresse
+téléphone
+
+Clients
+id (clé primaire, auto-incrémentée)
+nom
+prenom
+adresse
+téléphone
+
+Commandes
+id (clé primaire, auto-incrémentée)
+date_commande
+id_client (clé étrangère référant à Clients)
+
+Lignes_Commande
+id (clé primaire, auto-incrémentée)
+id_commande (clé étrangère référant à Commandes)
+id_produit (clé étrangère référant à Produits)
+id_quantite (la quantité commandée)
+prix_unitaire
+
+2. Insertion des données de test
+
+Pour vérifier le bon fonctionnement du système, rédaction des scripts SQL permettant d'insérer des données de test dans chacune des tables.
+Exemple :
+Insertion de catégories (ex. "Avions de chasse", "Avions commerciaux").
+Insertion de plusieurs produits avec leurs prix et quantités en stock.
+Création d’entrées pour les fournisseurs et les clients.
+Insertion d’une ou plusieurs commandes, puis insertion des lignes de commande associées à ces commandes.
+
+3. Développement d’une API en Node.js (V1)
+
+Mise en place de l’API REST
+
+Développement d'une API basique avec Node.js et Express qui permet de réaliser des opérations CRUD sur l’ensemble des tables.
+Par exemple, un endpoint GET /produits pour récupérer la liste des produits.
+Requêtes SQL et sécurité
+Dans la V1, les requêtes SQL étaient construites à l’aide du symbole $ pour insérer des variables directement dans les requêtes.
+
+Limitation de la V1 :
+Ce mode de construction rend l’API vulnérable aux injections SQL car les données utilisateur ne sont pas correctement paramétrées.
+
+
+V2 : Amélioration et renforcement de la sécurité et des fonctionnalités
+
+1. Correction des failles de sécurité
+Utilisation de requêtes paramétrées
+Pour contrer les injections SQL, toutes les requêtes ont été modifiées pour utiliser des paramètres de requête.
+Le point d'interrogation (?) est utilisé à la place du signe dollar $. Cela permet de lier les données passées en paramètres de façon sécurisée, évitant ainsi l'injection de code SQL malveillant.
+
+Validation des données d'entrée
+Avant de traiter une requête, une validation systématique des données est effectuée afin de s'assurer que toutes les valeurs respectent les contraintes.
+
+3. Gestion des rôles et autorisations
+
+Implémentation d’une gestion des rôles
+Dans la V2, un système de rôles a été introduit pour renforcer la sécurité et la gestion des droits.
+
+Exemple :
+Admin : Seul l’administrateur dispose du droit de supprimer des enregistrements (DELETE).
+User : Les utilisateurs classiques peuvent effectuer des opérations de lecture et de mise à jour, mais pas de suppression.
+Implémentation possible :
+Mise en place d’un mécanisme d’authentification (via sessions) qui permet d’identifier l’utilisateur et de connaître son rôle.
+Vérification dans les endpoints sensibles afin de n’autoriser l’opération que si l’utilisateur est identifié comme admin.
