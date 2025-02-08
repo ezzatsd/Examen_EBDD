@@ -138,9 +138,26 @@ initDB().then(connection => {
     });
 
     app.get('/commandes', async (req, res) => {
-        const { id_client } = req.query;
-        const [result] = await connection.query(`SELECT * FROM Commandes WHERE id_client = ?`);
-        res.json(result);
+        const { id_client, start, end } = req.query;
+        if (start && end) {
+            // Filtrer par période 
+            const [result] = await connection.query(
+                `SELECT * FROM Commandes WHERE date_commande BETWEEN ? AND ?`,
+                [start, end]
+            );
+            res.json(result);
+        } else if (id_client) {
+            
+            const [result] = await connection.query(
+                `SELECT * FROM Commandes WHERE id_client = ?`,
+                [id_client]
+            );
+            res.json(result);
+        } else {
+            // Retourner toutes les commandes si aucun filtre n'est fourni
+            const [result] = await connection.query(`SELECT * FROM Commandes`);
+            res.json(result);
+        }
     });
 
     app.put('/commandes', async (req, res) => {
